@@ -85,8 +85,9 @@ class ExpectedSARSAAgent(object):
 
         else:
             next_reward = reward
-
-        self.Q_sa[state, action] += self.alpha * (next_reward + np.sum(probabilities * self.Q_sa[next_state, action]) - self.Q_sa[state, action])
+        test = np.sum(probabilities * self.Q_sa[next_state, action])
+        self.Q_sa[state, action] += self.alpha * (next_reward + test - self.Q_sa[state, action])
+        
     
     def action_probabilities(self, state):
         probabilities = np.zeros(self.n_actions)
@@ -98,4 +99,5 @@ class ExpectedSARSAAgent(object):
             for action in self.Q_sa[state]:
                 probabilities[np.where(action == np.argmax(self.Q_sa[state]))] = 1
             return probabilities
-            
+    
+    
