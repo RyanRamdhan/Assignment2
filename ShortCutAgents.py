@@ -66,6 +66,7 @@ class ExpectedSARSAAgent(object):
         self.epsilon = epsilon
         self.alpha = alpha
         self.Q_sa = np.zeros((n_states, n_actions))
+        self.max_Q_value = 1000
         
     def select_action(self, state):
         # TO DO: Add own code
@@ -85,13 +86,22 @@ class ExpectedSARSAAgent(object):
 
         else:
             next_reward = reward
-        test = np.sum(probabilities * self.Q_sa[next_state, action])
-        self.Q_sa[state, action] += self.alpha * (next_reward + test - self.Q_sa[state, action])
+        
+        old_Q_value = self.Q_sa[state, action]
+        max_Q_value = np.max(self.Q_sa[state])
+
+        if old_Q_value + self.alpha * (next_reward - old_Q_value) > self.max_Q_value:
+            self.Q_sa[state, action] = self.max_Q_value
+
+        else:
+            self.Q_sa[state, action] += self.alpha * (next_reward - old_Q_value)
+
+        if self.Q_sa[state, action] > max_Q_value:
+            self.Q_sa[state, action] = max_Q_value
         
     
     def action_probabilities(self, state):
         probabilities = np.zeros(self.n_actions)
-        [0,1,0,0]
         if np.random.rand() < self.epsilon:
             action_probabilities = np.ones(self.n_actions) / self.n_actions
             return action_probabilities
