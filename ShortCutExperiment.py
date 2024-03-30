@@ -134,7 +134,7 @@ def create_comparison(n_episodes, n_repititions):
         print(agent_type)
         reward_array = run_repetitions(agent_type, alphas[i], n_episodes, n_repititions)
         smoothed = smooth(reward_array, 31)
-        plot.add_curve(x=np.arange(n_episodes), y=smoothed, label=agent_type)
+        plot.add_curve(x=np.arange(n_episodes), y=smoothed, label=agent_type + ', alpha: ' + str(alphas[i]))
         
         i += 1
     plot.save('comparison.png')
@@ -154,8 +154,8 @@ def create_windy_plots(n_episodes):
         #plt.savefig('windy_'+agent_type+'.png')
          
 
-create_plots(1000, 100)
-create_windy_plots(10000)
+#create_plots(1000, 100)
+#create_windy_plots(10000)
 create_comparison(1000, 100)
 
         
