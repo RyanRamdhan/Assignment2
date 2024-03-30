@@ -154,9 +154,10 @@ def create_windy_plots(n_episodes):
         #plt.savefig('windy_'+agent_type+'.png')
          
 
-#create_plots(1000, 100)
-#create_windy_plots(10000)
+create_plots(1000, 100)
+create_windy_plots(10000)
 create_comparison(1000, 100)
+
 
         
     
