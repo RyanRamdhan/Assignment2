@@ -49,7 +49,7 @@ def print_greedy_actions(Q):
     line_breaks = np.zeros((12,1), dtype=str)
     line_breaks[:] = '\n'
     print_string = np.hstack((print_string, line_breaks))
-    print(print_string.tobytes().decode('utf-8')) 
+    print(print_string.tobytes().decode('utf-8'))
     
 def run_repetitions(agent_type, alpha, n_episodes, n_repititions):
     reward_array = np.empty(n_episodes)
@@ -114,7 +114,6 @@ def run_windy_repetitions(agent_type, n_episodes):
 #...............................................................................................
 def create_plots(n_episodes, n_repitions):
      agent_types = ['qlearning', 'sarsa', 'expected_sarsa']
-     #agent_types = ['expected_sarsa']
      for agent_type in agent_types:
          print(agent_type)
          plot = CreatePlot(n_episodes, title='cumulative reward')
@@ -132,6 +131,7 @@ def create_comparison(n_episodes, n_repititions):
     alphas = [0.9, 0.1, 0.1]
     i = 0
     for agent_type in agent_types:
+        print(agent_type)
         reward_array = run_repetitions(agent_type, alphas[i], n_episodes, n_repititions)
         smoothed = smooth(reward_array, 31)
         plot.add_curve(x=np.arange(n_episodes), y=smoothed, label=agent_type)
@@ -151,13 +151,12 @@ def create_windy_plots(n_episodes):
             best_actions[state] = np.argmax(Q_sa[state])
                     
         plot = plt.plot(np.arange(state_size), best_actions, 'o',label=agent_type)
-        plt.show()
+        #plt.savefig('windy_'+agent_type+'.png')
          
 
 create_plots(1000, 100)
-#create_windy_plots(10000)
-#run_repetitions('qlearning', 0.5, 1000, 100)
-#create_comparison(1000, 100)
+create_windy_plots(10000)
+create_comparison(1000, 100)
 
         
     
